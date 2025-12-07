@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioTime Migration Project Status</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        .flow-arrow {
+            font-size: 2rem;
+            color: #0077B6;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-[#0077B6] mb-2">The BioTime Migration Project</h1>
+            <p class="text-lg text-gray-600">A Comprehensive Status Report</p>
+        </header>
+
+        <section id="summary" class="mb-16 bg-white rounded-xl shadow-lg p-8">
+            <h2 class="text-3xl font-bold text-center mb-8 text-[#0077B6]">Project at a Glance</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="bg-[#CAF0F8] p-6 rounded-lg">
+                    <p class="text-5xl font-extrabold text-[#0077B6]">138</p>
+                    <p class="text-lg font-semibold mt-2">Active Clients Targeted</p>
+                </div>
+                <div class="bg-[#90E0EF] p-6 rounded-lg">
+                    <p class="text-5xl font-extrabold text-[#0077B6]">63</p>
+                    <p class="text-lg font-semibold mt-2">Clients Successfully Migrated</p>
+                </div>
+                <div class="bg-[#00B4D8] p-6 rounded-lg">
+                    <p class="text-5xl font-extrabold text-white">52</p>
+                    <p class="text-lg font-semibold mt-2 text-white">Clients Requiring Follow-up</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="progress" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8 text-[#0077B6]">Migration Progress Breakdown</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-xl font-bold text-center mb-4">Group 1 (> 20 Devices)</h3>
+                    <div class="chart-container">
+                        <canvas id="group1Chart"></canvas>
+                    </div>
+                    <p class="text-center mt-4 text-gray-600">This chart shows the migration status for the 38 high-volume clients. A strong migration rate of <strong>68.4%</strong> has been achieved, indicating good progress within this segment.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-xl font-bold text-center mb-4">Group 2 (10-20 Devices)</h3>
+                    <div class="chart-container">
+                        <canvas id="group2Chart"></canvas>
+                    </div>
+                    <p class="text-center mt-4 text-gray-600">For the 100 mid-volume clients, the migration rate is <strong>37%</strong>. This highlights a key area for increased focus, as a significant number of clients are still pending or have churned.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="challenges" class="mb-16 bg-white rounded-xl shadow-lg p-8">
+            <h2 class="text-3xl font-bold text-center mb-8 text-[#0077B6]">Key Project Hurdles</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="text-center p-4 border-2 border-[#90E0EF] rounded-lg">
+                    <p class="text-4xl mb-2">📞</p>
+                    <h3 class="font-bold text-lg">Communication Gaps</h3>
+                    <p class="text-sm text-gray-600">Difficulty reaching clients and a lack of perceived urgency from their side.</p>
+                </div>
+                <div class="text-center p-4 border-2 border-[#90E0EF] rounded-lg">
+                    <p class="text-4xl mb-2">⚖️</p>
+                    <h3 class="font-bold text-lg">Legal Constraints</h3>
+                    <p class="text-sm text-gray-600">Existing contracts complicate mandatory migration, weakening our position.</p>
+                </div>
+                <div class="text-center p-4 border-2 border-[#90E0EF] rounded-lg">
+                    <p class="text-4xl mb-2">⏳</p>
+                    <h3 class="font-bold text-lg">Client Procrastination</h3>
+                    <p class="text-sm text-gray-600">Clients agree to migrate but delay taking the necessary practical steps.</p>
+                </div>
+                <div class="text-center p-4 border-2 border-[#90E0EF] rounded-lg">
+                    <p class="text-4xl mb-2">⚙️</p>
+                    <h3 class="font-bold text-lg">Technical Barriers</h3>
+                    <p class="text-sm text-gray-600">Lack of suitable internet or technical expertise on the client's end.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="solutions">
+            <h2 class="text-3xl font-bold text-center mb-8 text-[#0077B6]">The Path Forward: Proposed Solutions</h2>
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <div class="flex flex-col md:flex-row items-center justify-around gap-4 text-center">
+                    <div class="p-4 flex-1">
+                        <h3 class="font-bold text-xl text-[#0077B6]">Mandate at Renewal</h3>
+                        <p class="mt-2 text-gray-600">Make BioTime migration a mandatory condition upon contract renewal to create a clear timeline and strengthen our legal standing.</p>
+                    </div>
+                    <div class="flow-arrow hidden md:block">→</div>
+                    <div class="p-4 flex-1">
+                        <h3 class="font-bold text-xl text-[#0077B6]">Offer Hosted Solutions</h3>
+                        <p class="mt-2 text-gray-600">Provide a paid hosting option on our WDMS servers for clients lacking technical expertise, turning a challenge into a service.</p>
+                    </div>
+                    <div class="flow-arrow hidden md:block">→</div>
+                    <div class="p-4 flex-1">
+                        <h3 class="font-bold text-xl text-[#0077B6]">Define Escalation Path</h3>
+                        <p class="mt-2 text-gray-600">Establish a clear process for unresponsive clients, including temporary device suspension to prompt communication.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        const tooltipConfig = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                                return label.join(' ');
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        };
+
+        const group1Data = {
+            labels: ['Migrated', 'Follow-up Needed', 'Churned'],
+            datasets: [{
+                label: 'Group 1 Clients',
+                data: [26, 11, 1],
+                backgroundColor: ['#00B4D8', '#90E0EF', '#FF6384'],
+                hoverOffset: 4
+            }]
+        };
+
+        const group2Data = {
+            labels: ['Migrated', 'Follow-up Needed', 'Churned'],
+            datasets: [{
+                label: 'Group 2 Clients',
+                data: [37, 41, 22],
+                backgroundColor: ['#00B4D8', '#90E0EF', '#FF6384'],
+                hoverOffset: 4
+            }]
+        };
+
+        window.onload = function() {
+            const ctx1 = document.getElementById('group1Chart').getContext('2d');
+            new Chart(ctx1, {
+                type: 'doughnut',
+                data: group1Data,
+                options: { ...tooltipConfig, responsive: true, maintainAspectRatio: false }
+            });
+
+            const ctx2 = document.getElementById('group2Chart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'doughnut',
+                data: group2Data,
+                options: { ...tooltipConfig, responsive: true, maintainAspectRatio: false }
+            });
+        };
+    </script>
+</body>
+</html>
