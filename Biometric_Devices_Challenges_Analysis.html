@@ -36,41 +36,50 @@
 
     <main class="container mx-auto p-6">
 
-        <!-- Executive Summary Cards -->
+        <!-- Executive Summary Cards - UPDATED with new metrics -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div class="card border-t-4 border-red-500">
-                <h3 class="text-gray-500 text-sm font-bold uppercase">Legacy WDMS Issues</h3>
-                <p class="text-2xl font-bold text-red-600 mt-2">Critical</p>
-                <p class="text-xs text-gray-400 mt-1">Sync failure, Data overlap</p>
+            <div class="card border-t-4 border-blue-500">
+                <h3 class="text-gray-500 text-sm font-bold uppercase">Total Active Clients</h3>
+                <p class="text-2xl font-bold text-blue-600 mt-2">3,958</p>
+                <p class="text-xs text-gray-400 mt-1">Total operational base</p>
             </div>
-            <div class="card border-t-4 border-green-500">
-                <h3 class="text-gray-500 text-sm font-bold uppercase">New WDMS Status</h3>
-                <p class="text-2xl font-bold text-green-600 mt-2">Stable</p>
-                <p class="text-xs text-gray-400 mt-1">No issues reported</p>
+            <div class="card border-t-4 border-teal-500">
+                <h3 class="text-gray-500 text-sm font-bold uppercase">Using Geofencing</h3>
+                <p class="text-2xl font-bold text-teal-600 mt-2">3,132</p>
+                <p class="text-xs text-gray-400 mt-1">Clients using mobile attendance</p>
             </div>
-            <div class="card border-t-4 border-yellow-500">
-                <h3 class="text-gray-500 text-sm font-bold uppercase">BioTime Challenges</h3>
-                <p class="text-2xl font-bold text-yellow-600 mt-2">Operational</p>
-                <p class="text-xs text-gray-400 mt-1">Dependent on client infra</p>
+            <div class="card border-t-4 border-indigo-500">
+                <h3 class="text-gray-500 text-sm font-bold uppercase">Using Devices</h3>
+                <p class="text-2xl font-bold text-indigo-600 mt-2">1,282</p>
+                <p class="text-xs text-gray-400 mt-1">Clients using biometric hardware</p>
             </div>
-            <div class="card border-t-4 border-purple-500">
-                <h3 class="text-gray-500 text-sm font-bold uppercase">New Clients</h3>
-                <p class="text-2xl font-bold text-purple-600 mt-2">Friction</p>
-                <p class="text-xs text-gray-400 mt-1">High costs & requirements</p>
+            <div class="card border-t-4 border-orange-500">
+                <h3 class="text-gray-500 text-sm font-bold uppercase">Using Both</h3>
+                <p class="text-2xl font-bold text-orange-600 mt-2">1,010</p>
+                <p class="text-xs text-gray-400 mt-1">Hybrid attendance solutions</p>
             </div>
         </div>
 
         <!-- Charts Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-            <!-- Technical Issues Chart -->
-            <div class="card">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            
+            <!-- Chart 1: Technical Stability Comparison -->
+            <div class="card col-span-1">
                 <h2 class="section-title">System Stability Comparison</h2>
                 <canvas id="techIssuesChart"></canvas>
                 <p class="text-xs text-gray-500 mt-4 text-center">* New WDMS shows optimal stability compared to other systems</p>
             </div>
 
-            <!-- Customer Friction Chart -->
-            <div class="card">
+            <!-- Chart 2: Client Distribution by Biometric System -->
+            <div class="card col-span-1">
+                <h2 class="section-title">Device System Distribution (1,282 Clients)</h2>
+                <div class="flex justify-center h-64">
+                    <canvas id="deviceSystemChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 3: Customer Friction Chart -->
+            <div class="card col-span-1">
                 <h2 class="section-title">New Client Friction Causes (BioTime)</h2>
                 <div class="flex justify-center h-64">
                     <canvas id="frictionChart"></canvas>
@@ -83,7 +92,7 @@
             
             <!-- Technical Challenges List -->
             <div class="card">
-                <h2 class="section-title">Technical Analysis</h2>
+                <h2 class="section-title">Technical Analysis: Device & Middleware</h2>
                 
                 <div class="mb-4">
                     <h3 class="font-bold text-red-600 mb-2">1. Legacy WDMS Server:</h3>
@@ -116,14 +125,23 @@
             <!-- Strategic Analysis: Why Devices? -->
             <div class="card">
                 <h2 class="section-title">Why Clients Reject "Geofencing"?</h2>
-                <p class="text-sm text-gray-600 mb-4">Despite ease of use, clients insist on Biometric Devices for these reasons:</p>
+                <p class="text-sm text-gray-600 mb-4">Clients insist on Biometric Devices due to limitations and issues with the Geofencing feature:</p>
                 <canvas id="reasonsChart"></canvas>
                 
                 <div class="mt-4 space-y-2 text-sm bg-gray-50 p-3 rounded">
-                    <p><strong>📍 Location Overlap:</strong> Labor accommodation is often at the same work site.</p>
-                    <p><strong>📱 Mobile Issues:</strong> Old devices, poor GPS accuracy, or app freezing.</p>
-                    <p><strong>🌐 Connectivity:</strong> Poor internet coverage in remote sites.</p>
-                    <p><strong>🛡️ Fraud (Buddy Punching):</strong> Employees handing phones to colleagues.</p>
+                    <h3 class="font-bold text-gray-700 mb-1">Geofencing Specific Issues (New Data)</h3>
+                    <ul class="list-none space-y-2">
+                        <li class="problem-item"><span class="text-red-500 problem-icon">🛑</span> Recurring, unexplained technical issues affecting functionality.</li>
+                        <li class="problem-item"><span class="text-red-500 problem-icon">🚫</span> Mobile phone entry restrictions in certain secure client locations.</li>
+                        <li class="problem-item"><span class="text-red-500 problem-icon">📶</span> Weak GPS signal in multi-story buildings affecting location accuracy.</li>
+                    </ul>
+                    <hr class="my-2 border-gray-200">
+                    <h3 class="font-bold text-gray-700 mb-1">Original Reasons for Device Preference</h3>
+                    <ul class="list-none space-y-2">
+                        <li><strong>📍 Location Overlap:</strong> Labor accommodation is often at the same work site.</li>
+                        <li><strong>📱 Mobile Issues:</strong> Old devices, poor GPS accuracy, or app freezing.</li>
+                        <li><strong>🛡️ Fraud (Buddy Punching):</strong> Employees handing phones to colleagues.</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -179,6 +197,14 @@
     </footer>
 
     <script>
+        // Data for charts
+        const deviceDistributionData = {
+            wdms: 811,
+            biotime: 433,
+            jisrClocking: 38
+        };
+        const totalDevices = deviceDistributionData.wdms + deviceDistributionData.biotime + deviceDistributionData.jisrClocking;
+
         // Chart 1: Technical Stability Comparison
         const ctx1 = document.getElementById('techIssuesChart').getContext('2d');
         new Chart(ctx1, {
@@ -207,7 +233,29 @@
             }
         });
 
-        // Chart 2: Customer Friction Causes
+        // Chart 2: Device System Distribution
+        const ctxNew = document.getElementById('deviceSystemChart').getContext('2d');
+        new Chart(ctxNew, {
+            type: 'pie',
+            data: {
+                labels: ['WDMS', 'BioTime', 'JisrClocking'],
+                datasets: [{
+                    data: [deviceDistributionData.wdms, deviceDistributionData.biotime, deviceDistributionData.jisrClocking],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.8)', // Blue
+                        'rgba(147, 51, 234, 0.8)', // Violet
+                        'rgba(10, 207, 151, 0.8)' // Green
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { position: 'bottom' }, title: { display: true, text: `Total Clients with Devices: ${totalDevices}` } }
+            }
+        });
+
+        // Chart 3: Customer Friction Causes
         const ctx2 = document.getElementById('frictionChart').getContext('2d');
         new Chart(ctx2, {
             type: 'doughnut',
@@ -229,19 +277,23 @@
             }
         });
 
-        // Chart 3: Why Devices over Geofencing?
+        // Chart 4: Why Devices over Geofencing? (Remapped to Polar Area)
         const ctx3 = document.getElementById('reasonsChart').getContext('2d');
         new Chart(ctx3, {
             type: 'polarArea',
             data: {
-                labels: ['Buddy Punching', 'GPS/Mobile Issues', 'On-site Accommodation', 'Poor Internet'],
+                // Combined issues for device preference
+                labels: ['Buddy Punching', 'GPS/Mobile Issues', 'On-site Accommodation', 'Poor Internet', 'Unexplained Geofencing Issues', 'Mobile Entry Restrictions', 'Weak GPS in Multi-Story'],
                 datasets: [{
-                    data: [30, 25, 25, 20],
+                    data: [20, 15, 20, 10, 10, 15, 10], // Adjusted data distribution for 7 points
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.6)',
                         'rgba(54, 162, 235, 0.6)',
                         'rgba(255, 206, 86, 0.6)',
-                        'rgba(75, 192, 192, 0.6)'
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)',
+                        'rgba(201, 203, 207, 0.6)'
                     ]
                 }]
             },
