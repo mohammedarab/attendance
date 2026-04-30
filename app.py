@@ -1,51 +1,70 @@
-import streamlit as st
 import pandas as pd
+import streamlit as st
 from io import BytesIO
 
-st.set_page_config(page_title="أداة سجلات الحضور", layout="centered")
+# إعداد واجهة الويب
+st.set_page_config(page_title="أداة سجلات الحضور - Excel", layout="centered")
 
-st.title("📂 معالج سجلات الحضور")
-st.write("قم برفع ملف الـ CSV لتحويله إلى تنسيق الإكسل المطلوب")
+st.title("📂 معالج سجلات الحضور (Excel)")
+st.write("ارفع ملف الإكسل لاستخراج البيانات المنسقة فوراً")
 
-uploaded_file = st.file_uploader("اختر ملف CSV", type=['csv'])
+# رفع الملف بصيغة xlsx
+uploaded_file = st.file_uploader("اختر ملف Excel (.xlsx)", type=['xlsx'])
 
 if uploaded_file is not None:
     try:
-        # قراءة الملف ومعرفة ما إذا كان يحتاج لتخطي السطر الأول
-        content = uploaded_file.getvalue().decode('utf-8').splitlines()
-        skip = 1 if 'Transaction' in content[0] else 0
+        # 1. قراءة ملف الإكسل (تحميل البيانات بالكامل)
+        # نقرأ الملف أولاً لفحص السطر الأول
+        df_check = pd.read_excel(uploaded_file, nrows=1)
         
-        uploaded_file.seek(0)
-        df = pd.read_csv(uploaded_file, skiprows=skip)
+        # إذا كان الملف يحتوي على سطر "Transaction" في البداية نقوم بتخطيه
+        if 'Transaction' in df_check.columns or 'Transaction' in str(df_check.iloc[0,0]):
+            df = pd.read_excel(uploaded_file, skiprows=1)
+        else:
+            df = pd.read_excel(uploaded_file)
 
-        # تحديد الأعمدة المطلوبة وتنسيقها
+        # 2. تحديد الأعمدة المطلوبة بناءً على ملفاتك المرفقة 
+        # نقوم بمطابقة المسميات سواء كانت بالإنجليزية أو العربية
         mapping = {
-            'Employee ID': 'الرقم الوظيفي', 'First Name': 'اسم الموظف',
-            'Date': 'التاريخ', 'Time': 'وقت البصمة',
-            'الرقم الوظيفي': 'الرقم الوظيفي', 'اسم الموظف': 'اسم الموظف',
-            'التاريخ': 'التاريخ', 'وقت البصمة': 'وقت البصمة'
+            'Employee ID': 'الرقم الوظيفي',
+            'First Name': 'اسم الموظف',
+            'Date': 'التاريخ',
+            'Time': 'وقت البصمة',
+            'الرقم الوظيفي': 'الرقم الوظيفي',
+            'اسم الموظف': 'اسم الموظف',
+            'التاريخ': 'التاريخ',
+            'وقت البصمة': 'وقت البصمة'
         }
         
-        cols_to_keep = [c for c in df.columns if c in mapping]
-        result_df = df[cols_to_keep].rename(columns=mapping)
+        # تصفية الأعمدة الموجودة فقط
+        available_cols = [c for c in df.columns if c in mapping]
+        result_df = df[available_cols].rename(columns=mapping)
         
-        # تنسيق التاريخ والوقت وفق القالب [cite: 1]
+        # 3. توحيد تنسيقات التاريخ والوقت كما طلبت سابقاً
+        # التاريخ: DD/MM/YYYY
         result_df['التاريخ'] = pd.to_datetime(result_df['التاريخ'], errors='coerce').dt.strftime('%d/%m/%Y')
+        
+        # الوقت: HH:MM
         result_df['وقت البصمة'] = pd.to_datetime(result_df['وقت البصمة'], errors='coerce').dt.strftime('%H:%M')
 
-        st.success("✅ تم معالجة البيانات بنجاح!")
-        st.dataframe(result_df.head()) # عرض عينة من البيانات
+        # حذف أي صفوف فارغة ناتجة عن التنسيق
+        result_df.dropna(subset=['الرقم الوظيفي', 'التاريخ'], inplace=True)
 
-        # تحويل البيانات لملف إكسل في الذاكرة للتحميل
+        st.success("✅ تم استخراج كافة البيانات بنجاح!")
+        st.dataframe(result_df) # عرض البيانات للتأكد
+
+        # 4. تجهيز ملف المخرجات بصيغة Excel (.xlsx)
         output = BytesIO()
         with pd.ExcelWriter(output, engine='openpyxl') as writer:
-            result_df.to_excel(writer, index=False)
+            result_df.to_excel(writer, index=False, sheet_name='Sheet1')
         
+        # زر التحميل
         st.download_button(
-            label="تحميل ملف Excel الجاهز",
+            label="تحميل ملف Excel المنسق",
             data=output.getvalue(),
-            file_name="Attendance_Report_Cleaned.xlsx",
+            file_name="Attendance_Report_Final.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
+        
     except Exception as e:
-        st.error(f"حدث خطأ: {e}")
+        st.error(f"حدث خطأ أثناء قراءة الملف: {e}")
